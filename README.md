@@ -11,9 +11,9 @@ This app was built as part of the Flutter Create contest.
 Ensure the Flutter cli is installed (<https://flutter.dev/docs/get-started/install>).
 
 ### Actions
-To edit colors simply scroll horizontally on the color to change its value.
-Double tap to change which value is being edited.
-Tap and hold on a color to remove it.
+- To edit colors simply scroll horizontally on the color to change its value.
+- Double tap to change which value is being edited.
+- Tap and hold on a color to remove it.
 
 ### Run release version
 Run `Flutter run --release` in the main folder of the app.
