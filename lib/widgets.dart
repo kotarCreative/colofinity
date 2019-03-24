@@ -36,30 +36,6 @@ class ColorCard extends StatelessWidget {
   }
 }
 
-class FooterBtn extends StatelessWidget {
-  final String label;
-  final Function onTap;
-
-  FooterBtn(this.label, this.onTap);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        child: Center(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.button,
-          ),
-        ),
-        color: Theme.of(context).primaryColor,
-        height: 60,
-      ),
-      onTap: () => onTap(),
-    );
-  }
-}
-
 class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,7 +43,8 @@ class Info extends StatelessWidget {
       appBar: AppBar(title: Text('Colorfinity')),
       body: Container(
         child: Text(
-          '1. Add colors to create a color palette.\n2. Scroll horizontally on colors to change their value.\n3. Double tap to change edit value.\n4. Tap and hold to remove color.',
+          '1. Add colors to create a color palette.\n2. Scroll horizontally on colors to edit.\n3. Double tap to change edit value.\n4. Tap and hold to remove color.',
+          style: TextStyle(fontSize: 18)
         ),
         margin: EdgeInsets.all(20.0),
       ),

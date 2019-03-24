@@ -8,11 +8,10 @@ class Colorfinity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          primaryColor: Color(0xFF333333),
-          textTheme: TextTheme(button: TextStyle(color: Colors.white))),
-      home: MainApp()
-    );
+        theme: ThemeData(
+            primaryColor: Color(0xFF333333),
+            textTheme: TextTheme(button: TextStyle(color: Colors.white))),
+        home: MainApp());
   }
 }
 
@@ -49,7 +48,7 @@ class _ColorManagerState extends State<ColorManager> {
   String editMode = 'hue';
   final ScrollController _scrollCont = new ScrollController();
 
-  void _add() {
+  void _addColor() {
     Color color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
         .withOpacity(1.0);
     setState(() => _colors.add(color));
@@ -60,7 +59,7 @@ class _ColorManagerState extends State<ColorManager> {
     }
   }
 
-  void remove(int idx) {
+  void _removeColor(int idx) {
     setState(() => _colors.removeAt(idx));
   }
 
@@ -98,31 +97,43 @@ class _ColorManagerState extends State<ColorManager> {
 
   Widget _buildColorCard(BuildContext context, int idx) {
     Color colorVal = _colors[idx];
-    return ColorCard(idx, colorVal, onDrag: updateColor, onHold: remove);
+    return ColorCard(idx, colorVal, onDrag: updateColor, onHold: _removeColor);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Column(
-        children: <Widget>[
-          Expanded(
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: GestureDetector(
             child: ListView.builder(
               itemBuilder: _buildColorCard,
               itemCount: _colors.length,
               controller: _scrollCont,
             ),
+            onDoubleTap: changeEditType,
           ),
-          Container(
+        ),
+        Container(
+            child: Text(
+              'Slide to edit $editMode',
+              textAlign: TextAlign.center,
+            ),
+            margin: EdgeInsets.all(20)),
+        GestureDetector(
+          child: Container(
+            child: Center(
               child: Text(
-                'Slide to edit $editMode',
-                textAlign: TextAlign.center,
+                'Add Color',
+                style: Theme.of(context).textTheme.button,
               ),
-              margin: EdgeInsets.all(20)),
-          FooterBtn('Add Color', _add)
-        ],
-      ),
-      onDoubleTap: changeEditType,
+            ),
+            color: Theme.of(context).primaryColor,
+            height: 60,
+          ),
+          onTap: _addColor,
+        )
+      ],
     );
   }
 }
