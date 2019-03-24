@@ -4,7 +4,7 @@ Colorfinity is a simple Flutter app for creating color palettes. Add random colo
 
 This app was built as part of the Flutter Create contest.
 
-![alt text](https://github.com/kotarCreative/colofinity/Screenshot.png)
+![app screenshot](https://github.com/kotarCreative/colorfinity/raw/master/Screenshot.png)
 
 ## Getting Started
 
