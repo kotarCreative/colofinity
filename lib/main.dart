@@ -24,17 +24,6 @@ class MainApp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Colorfinity'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => Info(),
-              ),
-            ),
-          ),
-        ],
       ),
       body: Container(
         child: AppManager(),
@@ -57,7 +46,7 @@ class _AppManagerState extends State<AppManager> {
     Color color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
         .withOpacity(1.0);
     setState(() => cols.add(color));
-    double maxScroll = _scrollCont.position.maxScrollExtent;
+    double maxScroll = cols.length > 1 ? _scrollCont.position.maxScrollExtent : 0;
     if (maxScroll > 0) {
       _scrollCont.animateTo(
         maxScroll + 70,
@@ -109,34 +98,50 @@ class _AppManagerState extends State<AppManager> {
       children: <Widget>[
         Expanded(
           child: GestureDetector(
-            child: ListView.builder(
-              itemBuilder: _buildColorCard,
-              itemCount: cols.length,
-              controller: _scrollCont,
-            ),
+            child: cols.length > 0
+                ? ListView.builder(
+                    itemBuilder: _buildColorCard,
+                    itemCount: cols.length,
+                    controller: _scrollCont,
+                  )
+                : Center(
+                    child: Text(
+                      'Welcome to Colorfinity! 👍\nScroll horizontally on colors to edit.\nDouble tap to change edit value.\nTap and hold to remove color.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(height: 1.5),
+                    ),
+                  ),
             onDoubleTap: alterEditMode,
           ),
         ),
         Container(
           child: Text(
-            'Edit Mode: $editMode',
+            'Edit $editMode',
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.button,
           ),
-          margin: EdgeInsets.all(20),
+          padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
+          width: double.infinity,
+          color: Theme.of(context).primaryColor,
         ),
-        GestureDetector(
+        Container(
           child: Container(
-            child: Center(
+            width: double.infinity,
+            height: 60,
+            child: FlatButton(
               child: Text(
                 'Add Color',
                 style: Theme.of(context).textTheme.button,
               ),
+              onPressed: addCol,
+              shape: Border.all(
+                color: Color(0XFFFFFFFF),
+              ),
             ),
-            color: Theme.of(context).primaryColor,
-            height: 60,
           ),
-          onTap: addCol,
-        )
+          color: Theme.of(context).primaryColor,
+          padding: EdgeInsets.all(10),
+        ),
       ],
     );
   }
@@ -170,22 +175,6 @@ class ColCard extends StatelessWidget {
         ),
         margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
         color: col,
-      ),
-    );
-  }
-}
-
-class Info extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Available Actions')),
-      body: Container(
-        child: Text(
-          '1. Scroll horizontally on colors to edit.\n2. Double tap to change edit value.\n3. Tap and hold to remove color.',
-          style: TextStyle(fontSize: 18),
-        ),
-        margin: EdgeInsets.all(20.0),
       ),
     );
   }
