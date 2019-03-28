@@ -10,23 +10,18 @@ class Colorfinity extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFF333333),
         textTheme: TextTheme(
-          button: TextStyle(color: Colors.white),
+          button: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
-      home: MainApp(),
-    );
-  }
-}
-
-class MainApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Colorfinity'),
-      ),
-      body: Container(
-        child: AppManager(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Colorfinity'),
+        ),
+        body: Container(
+          child: AppManager(),
+        ),
       ),
     );
   }
@@ -71,25 +66,29 @@ class _AppManagerState extends State<AppManager> {
 
   void updateCol(int idx, Color color, double dx) {
     HSLColor hslCol = HSLColor.fromColor(color);
-    Color newCol;
+    HSLColor newCol;
 
-    if (editMode == 'Hue') {
-      double hue = hslCol.hue + dx;
-      if (hue >= 0 && hue <= 360) {
-        newCol = hslCol.withHue(hue).toColor();
-      }
-    } else if (editMode == 'Saturation') {
-      double sat = hslCol.saturation + dx / 100;
-      if (sat >= 0 && sat <= 1) {
-        newCol = hslCol.withSaturation(sat).toColor();
-      }
-    } else if (editMode == 'Lightness') {
-      double lig = hslCol.lightness + dx / 100;
-      if (lig >= 0 && lig <= 1) {
-        newCol = hslCol.withLightness(lig).toColor();
-      }
+    switch (editMode) {
+      case 'Hue':
+        double hue = hslCol.hue + dx;
+        if (hue >= 0 && hue <= 360) {
+          newCol = hslCol.withHue(hue);
+        }
+        break;
+      case 'Saturation':
+        double sat = hslCol.saturation + dx / 100;
+        if (sat >= 0 && sat <= 1) {
+          newCol = hslCol.withSaturation(sat);
+        }
+        break;
+      case 'Lightness':
+        double lig = hslCol.lightness + dx / 100;
+        if (lig >= 0 && lig <= 1) {
+          newCol = hslCol.withLightness(lig);
+        }
+        break;
     }
-    setState(() => cols[idx] = newCol);
+    setState(() => cols[idx] = newCol.toColor());
   }
 
   Widget _buildColorCard(BuildContext context, int idx) {
