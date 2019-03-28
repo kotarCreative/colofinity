@@ -44,9 +44,10 @@ class _AppManagerState extends State<AppManager> {
 
   void addCol() {
     Color color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-        .withOpacity(1.0);
+        .withOpacity(1);
     setState(() => cols.add(color));
-    double maxScroll = cols.length > 1 ? _scrollCont.position.maxScrollExtent : 0;
+    double maxScroll =
+        cols.length > 1 ? _scrollCont.position.maxScrollExtent : 0;
     if (maxScroll > 0) {
       _scrollCont.animateTo(
         maxScroll + 70,
@@ -70,22 +71,25 @@ class _AppManagerState extends State<AppManager> {
 
   void updateCol(int idx, Color color, double dx) {
     HSLColor hslCol = HSLColor.fromColor(color);
+    Color newCol;
+
     if (editMode == 'Hue') {
       double hue = hslCol.hue + dx;
       if (hue >= 0 && hue <= 360) {
-        setState(() => cols[idx] = hslCol.withHue(hue).toColor());
+        newCol = hslCol.withHue(hue).toColor();
       }
     } else if (editMode == 'Saturation') {
       double sat = hslCol.saturation + dx / 100;
       if (sat >= 0 && sat <= 1) {
-        setState(() => cols[idx] = hslCol.withSaturation(sat).toColor());
+        newCol = hslCol.withSaturation(sat).toColor();
       }
     } else if (editMode == 'Lightness') {
       double lig = hslCol.lightness + dx / 100;
       if (lig >= 0 && lig <= 1) {
-        setState(() => cols[idx] = hslCol.withLightness(lig).toColor());
+        newCol = hslCol.withLightness(lig).toColor();
       }
     }
+    setState(() => cols[idx] = newCol);
   }
 
   Widget _buildColorCard(BuildContext context, int idx) {
@@ -106,7 +110,7 @@ class _AppManagerState extends State<AppManager> {
                   )
                 : Center(
                     child: Text(
-                      'Welcome to Colorfinity! 👍\nScroll horizontally on colors to edit.\nDouble tap to change edit value.\nTap and hold to remove color.',
+                      'Welcome to Colorfinity! 👋\nScroll horizontally on colors to edit.\nDouble tap to change edit value.\nTap and hold to remove color.',
                       textAlign: TextAlign.center,
                       style: TextStyle(height: 1.5),
                     ),
@@ -135,7 +139,7 @@ class _AppManagerState extends State<AppManager> {
               ),
               onPressed: addCol,
               shape: Border.all(
-                color: Color(0XFFFFFFFF),
+                color: Colors.white,
               ),
             ),
           ),
@@ -173,7 +177,7 @@ class ColCard extends StatelessWidget {
           height: 60,
           duration: const Duration(milliseconds: 200),
         ),
-        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         color: col,
       ),
     );
