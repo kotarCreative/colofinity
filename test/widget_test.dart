@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:colorfinity/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App shows instructions when starting', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(Colorfinity());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the app opens with helper text.
+    expect(find.text('Welcome to Colorfinity! 👋\nScroll horizontally on colors to edit.\nDouble tap to change edit value.\nTap and hold to remove color.'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('Adds color when hitting add button', (WidgetTester tester) async {
+    await tester.pumpWidget(Colorfinity());
+
+    // Adds one color when tapping the add color button.
+    await tester.tap(find.byType(FlatButton));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(ColCard), findsOneWidget);
   });
 }
