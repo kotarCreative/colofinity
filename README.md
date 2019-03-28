@@ -21,5 +21,4 @@ Run `Flutter run` in the main folder of the app.
 
 ## Screenshots
 
-![app screenshot](https://github.com/kotarCreative/colorfinity/raw/master/screenshots/screenshot-1.png)
-![app screenshot](https://github.com/kotarCreative/colorfinity/raw/master/screenshots/screenshot-2.png)
+![app screenshot](https://github.com/kotarCreative/colorfinity/raw/master/screenshots/screenshot-1.png) ![app screenshot](https://github.com/kotarCreative/colorfinity/raw/master/screenshots/screenshot-2.png)
